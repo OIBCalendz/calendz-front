@@ -94,18 +94,7 @@
               </form>
             </div>
           </div>
-          <div class="row mt-3">
-            <div class="col-6">
-              <router-link
-                to="/password-reset"
-                class="text-light"><small>Mot de passe oublié ?</small></router-link>
-            </div>
-            <div class="col-6 text-right">
-              <router-link
-                to="/register"
-                class="text-light"><small>Créer un compte</small></router-link>
-            </div>
-          </div>
+          <!-- TODO: delete /password-reset et peut-être /register -->
         </div>
       </div>
     </div>

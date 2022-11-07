@@ -13,48 +13,16 @@
             rel="noreferrer noopener"
             class="font-weight-bold ml-1"
             target="_blank">Alexandre Tuet</a>
-          <br>
-          Développeurs actuels :
-          <a
-            rel="noreferrer noopener"
-            class="font-weight-bold ml-1"
-            target="_blank">Maxime Lemaire</a> &
-          <a
-            href="https://doryanchaigneau.fr/"
-            rel="noreferrer noopener"
-            class="font-weight-bold ml-1"
-            target="_blank">Doryan Chaigneau</a>
         </div>
       </div>
       <div class="col-lg-6">
         <ul class="nav nav-footer justify-content-center justify-content-lg-end">
           <li class="nav-item">
             <a
-              :href="`https://github.com/calendz/calendz-front/releases/tag/v${version}`"
-              rel="noreferrer noopener"
-              class="nav-link"
-              target="_blank">v{{ version }}</a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="https://changelog.calendz.app"
-              rel="noreferrer noopener"
-              target="_blank">Changelog</a>
-          </li>
-          <li class="nav-item">
-            <a
               class="nav-link"
               href="https://github.com/calendz"
               rel="noreferrer noopener"
               target="_blank">Github</a>
-          </li>
-          <li class="nav-item">
-            <a
-              href="https://status.calendz.app/"
-              rel="noreferrer noopener"
-              class="nav-link"
-              target="_blank">Status</a>
           </li>
         </ul>
       </div>
