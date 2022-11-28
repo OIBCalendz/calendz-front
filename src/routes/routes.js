@@ -14,12 +14,7 @@ import NotFound from '@/views/Pages/Errors/NotFound.vue'
 
 // Authentication
 const Home = () => import(/* webpackChunkName: "pages" */ '@/views/Pages/Home.vue')
-const Contact = () => import(/* webpackChunkName: "pages" */ '@/views/Pages/Contact.vue')
 const Login = () => import(/* webpackChunkName: "pages" */ '@/views/Pages/Auth/Login.vue')
-const Register = () => import(/* webpackChunkName: "pages" */ '@/views/Pages/Auth/Register.vue')
-const EmailConfirmation = () => import(/* webpackChunkName: "pages" */ '@/views/Pages/Auth/EmailConfirmation.vue')
-const PasswordReset = () => import(/* webpackChunkName: "pages" */ '@/views/Pages/Auth/PasswordReset.vue')
-const PasswordResetChangePassword = () => import(/* webpackChunkName: "pages" */ '@/views/Pages/Auth/PasswordResetChangePassword.vue')
 
 // Dashboard
 const Dashboard = () => import(/* webpackChunkName: "page" */ '@/views/Pages/Dashboard/Dashboard.vue')
@@ -180,55 +175,11 @@ const authPages = {
       }
     },
     {
-      path: '/contact',
-      name: 'Contact',
-      component: Contact,
-      meta: {
-        title: 'Contact - Calendz'
-      }
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login,
       meta: {
         title: 'Connexion - Calendz',
-        redirectToDashboardIfConnected: true
-      }
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register,
-      meta: {
-        title: 'Inscription - Calendz',
-        redirectToDashboardIfConnected: true
-      }
-    },
-    {
-      path: '/email-confirmation/:token',
-      name: 'Verification email',
-      component: EmailConfirmation,
-      meta: {
-        title: 'Confirmation adresse mail - Calendz',
-        redirectToDashboardIfConnected: true
-      }
-    },
-    {
-      path: '/password-reset',
-      name: 'PasswordReset',
-      component: PasswordReset,
-      meta: {
-        title: 'Mot de passe oublié - Calendz',
-        redirectToDashboardIfConnected: true
-      }
-    },
-    {
-      path: '/password-reset/:token',
-      name: 'PasswordResetChangePassword',
-      component: PasswordResetChangePassword,
-      meta: {
-        title: 'Mot de passe oublié - Calendz',
         redirectToDashboardIfConnected: true
       }
     },
