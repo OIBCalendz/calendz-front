@@ -19,7 +19,7 @@ Ce repository représente le front de calendz.
 
 ## Écosystème
 
-Le front de calendz est développé avec les frameworks et outils suivants* :
+Avant la mise a jour du front de calendz voici les frameworks et outils utilisés* :
 
 | Librairie        | Version | Description                                                                                                       |
 | ---------------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -41,7 +41,9 @@ Le front de calendz est développé avec les frameworks et outils suivants* :
 
 ### Pré-requis
 
-* Installer Node 12.18.3
+* Installer Node
+Avant mise a jour Node version 12.18.3
+### Version actuelle Node.js 19.4.0
 * Créer un fichier `.env` à la source de ce repository contenant les valeurs suivantes (modifiables selon vos besoins)
 
       NODE_ENV=development
