@@ -129,7 +129,7 @@ export default {
       default: () => new Date(),
       description: 'Notification timestamp (used internally to handle notification removal correctly)'
     },
-    component: {
+    componen: {
       type: [Object, Function],
       description: 'Custom content component. Cane be a `.vue` component or render function',
       default: null
