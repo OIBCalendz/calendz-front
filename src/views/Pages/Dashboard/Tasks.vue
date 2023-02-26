@@ -348,7 +348,7 @@
       @submit.prevent
     >
       <modal :show.sync="showTaskCreationModal">
-        <template v-slot:header>
+        <template #header>
           <h5 class="modal-title">
             Créer une tâche
           </h5>
@@ -472,7 +472,7 @@
           </div>
         </div>
 
-        <template v-slot:footer>
+        <template #footer>
           <base-button
             size="md"
             type="secondary"
@@ -500,7 +500,7 @@
       @submit.prevent
     >
       <modal :show.sync="showTaskModificationModal">
-        <template v-slot:header>
+        <template #header>
           <h5 class="modal-title">
             Modification
           </h5>
@@ -625,7 +625,7 @@
           </div>
         </div>
 
-        <template v-slot:footer>
+        <template #footer>
           <base-button
             size="lg"
             type="secondary"
