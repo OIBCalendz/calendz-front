@@ -1,13 +1,15 @@
-import BaseInput from '@/components/Inputs/BaseInput.vue'
-import BaseDropdown from '@/components/BaseDropdown.vue'
-import Card from '@/components/Cards/Card.vue'
-import Modal from '@/components/Modal.vue'
-import StatsCard from '@/components/Cards/StatsCard.vue'
-import BaseButton from '@/components/BaseButton.vue'
-import Badge from '@/components/Badge.vue'
+
+import BaseInput from '../components/Inputs/BaseInput'
+
+import BaseDropdown from '../components/BaseDropdown'
+import Card from '@/components/Cards/Card'
+import Modal from '@/components/Modal'
+import StatsCard from '@/components/Cards/StatsCard'
+import BaseButton from '@/components/BaseButton'
+import Badge from '@/components/Badge'
 import RouteBreadcrumb from '@/components/Breadcrumb/RouteBreadcrumb'
-import BaseCheckbox from '@/components/Inputs/BaseCheckbox.vue'
-import BaseSwitch from '@/components/BaseSwitch.vue'
+import BaseCheckbox from '@/components/Inputs/BaseCheckbox'
+import BaseSwitch from '@/components/BaseSwitch'
 import BaseRadio from '@/components/Inputs/BaseRadio'
 import BaseProgress from '@/components/BaseProgress'
 import BasePagination from '@/components/BasePagination'
@@ -23,44 +25,42 @@ import Placeholder from '@/components/Placeholder'
 import TaskType from '@/components/Tasks/TaskType'
 import TaskCore from '@/components/Tasks/TaskCore'
 
-import { Input, Tooltip, Popover } from 'element-ui'
-import { ValidationProvider } from 'vee-validate'
+import { ElInput, ElTooltip, ElPopover } from 'element-plus'
 
 // Help
 import HelpSection from '@/components/Help/HelpSection'
 
 const GlobalComponents = {
-  install (Vue) {
-    Vue.component(Badge.name, Badge)
-    Vue.component(BaseAlert.name, BaseAlert)
-    Vue.component(BaseButton.name, BaseButton)
-    Vue.component(BaseCheckbox.name, BaseCheckbox)
-    Vue.component(BaseHeader.name, BaseHeader)
-    Vue.component(BaseInput.name, BaseInput)
-    Vue.component(BaseDropdown.name, BaseDropdown)
-    Vue.component(BaseNav.name, BaseNav)
-    Vue.component(BasePagination.name, BasePagination)
-    Vue.component(BaseProgress.name, BaseProgress)
-    Vue.component(BaseRadio.name, BaseRadio)
-    Vue.component(BaseSwitch.name, BaseSwitch)
-    Vue.component(Card.name, Card)
-    Vue.component(Modal.name, Modal)
-    Vue.component(StatsCard.name, StatsCard)
-    Vue.component(RouteBreadcrumb.name, RouteBreadcrumb)
-    Vue.component(Input.name, Input)
-    Vue.component(TagsInput.name, TagsInput)
-    Vue.component(PasswordStrength.name, PasswordStrength)
-    Vue.component(ApiErrors.name, ApiErrors)
-    Vue.component(Placeholder.name, Placeholder)
-    Vue.component('ValidationProvider', ValidationProvider)
+  install (app) {
+    app.component(Badge.name, Badge)
+    app.component(BaseAlert.name, BaseAlert)
+    app.component(BaseButton.name, BaseButton)
+    app.component(BaseCheckbox.name, BaseCheckbox)
+    app.component(BaseHeader.name, BaseHeader)
+    app.component(BaseInput.name, BaseInput)
+    app.component(BaseDropdown.name, BaseDropdown)
+    app.component(BaseNav.name, BaseNav)
+    app.component(BasePagination.name, BasePagination)
+    app.component(BaseProgress.name, BaseProgress)
+    app.component(BaseRadio.name, BaseRadio)
+    app.component(BaseSwitch.name, BaseSwitch)
+    app.component(Card.name, Card)
+    app.component(Modal.name, Modal)
+    app.component(StatsCard.name, StatsCard)
+    app.component(RouteBreadcrumb.name, RouteBreadcrumb)
+    app.component(ElInput.name, ElInput)
+    app.component(TagsInput.name, TagsInput)
+    app.component(PasswordStrength.name, PasswordStrength)
+    app.component(ApiErrors.name, ApiErrors)
+    app.component(Placeholder.name, Placeholder)
 
-    Vue.component(TaskType.name, TaskType)
-    Vue.component(TaskCore.name, TaskCore)
+    app.component(TaskType.name, TaskType)
+    app.component(TaskCore.name, TaskCore)
 
-    Vue.component(HelpSection.name, HelpSection)
+    app.component(HelpSection.name, HelpSection)
 
-    Vue.use(Tooltip)
-    Vue.use(Popover)
+    app.use(ElTooltip)
+    app.use(ElPopover)
   }
 }
 

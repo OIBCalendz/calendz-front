@@ -6,11 +6,11 @@
       type="file"
       class="custom-file-input"
       lang="en"
-      v-on="listeners"
     >
     <label
       class="custom-file-label"
-      for="customFileLang">
+      for="customFileLang"
+    >
       {{ label }}
     </label>
   </div>
@@ -33,13 +33,14 @@ export default {
   computed: {
     listeners () {
       return {
-        ...this.$listeners,
+        // @TODO: $listeners is deprecated, but i don't know what to replace it with
+        // ...this.$listeners,
         change: this.fileChange
       }
     },
     label () {
-      let fileNames = []
-      for (let file of this.files) {
+      const fileNames = []
+      for (const file of this.files) {
         fileNames.push(file.name)
       }
       return fileNames.length ? fileNames.join(', ') : this.initialLabel

@@ -5,7 +5,8 @@
     <!-- ====================================== -->
     <div
       class="row cursor-pointer"
-      @click="$emit('select')">
+      @click="$emit('select')"
+    >
       <!-- left -->
       <div class="col-11">
         <h2>{{ title }}</h2>
@@ -25,26 +26,22 @@
     <!-- ====================================== -->
     <!-- == Main slot ========================= -->
     <!-- ====================================== -->
-    <collapse-transition>
+    <Transition>
       <div
         v-show="open"
-        class="collapse show">
+        class="collapse show"
+      >
         <slot />
         <hr class="my-5">
       </div>
-    </collapse-transition>
-
+    </Transition>
   </div>
 </template>
 
 <script>
-import { CollapseTransition } from 'vue2-transitions'
 
 export default {
   name: 'HelpSection',
-  components: {
-    CollapseTransition
-  },
   props: {
     open: {
       type: Boolean,
@@ -63,6 +60,7 @@ export default {
 </script>
 
 <style scoped>
+/*@TODO transition: collapse*/
 .section-animate {
   -moz-transition: all .1s linear;
   -webkit-transition: all .1s linear;

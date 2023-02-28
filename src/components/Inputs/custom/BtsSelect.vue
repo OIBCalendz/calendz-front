@@ -3,35 +3,40 @@
     :error="getError(veeScope ? `${veeScope}.bts` : 'bts')"
     :valid="isValid(veeScope ? `${veeScope}.bts` : 'bts')"
     class="w-100"
-    label="Option BTS">
+    label="Option BTS"
+  >
     <el-select
-      v-validate="'required|boolean'"
       v-model="inputValue"
+      v-validate="'required|boolean'"
       :disabled="disabled"
-      name="bts">
+      name="bts"
+    >
       <el-option
         v-for="(option, index) in options"
         :key="index"
         :label="option.label"
-        :value="option.value"/>
+        :value="option.value"
+      />
     </el-select>
   </base-input>
 </template>
 
 <script>
-import store from '@/store'
-import { Select, Option } from 'element-ui'
+import { store } from '@/store'
+import { ElSelect, ElOption } from 'element-plus'
+import BaseInput from '@/components/Inputs/BaseInput.vue'
 
 export default {
   components: {
-    [Select.name]: Select,
-    [Option.name]: Option
+    BaseInput,
+    [ElSelect.name]: ElSelect,
+    [ElOption.name]: ElOption
   },
   props: {
     value: {
       type: Boolean,
       default: false,
-      doc: `Select's value`
+      doc: 'Select\'s value'
     },
     disabled: {
       type: Boolean,
@@ -62,11 +67,14 @@ export default {
     this.inputValue = store.state.account.user.bts
   },
   methods: {
+    // @TODO vee-validate
     getError (name) {
-      return this.errors.first(name)
+      // return this.errors.first(name)
+      return false
     },
     isValid (name) {
-      return this.validated && !this.errors.has(name)
+      // return this.validated && !this.errors.has(name)
+      return true
     }
   }
 }

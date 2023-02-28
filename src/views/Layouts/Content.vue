@@ -1,19 +1,22 @@
 <template>
   <div class="content">
-    <FadeTransition
-      :duration="200"
-      mode="out-in">
-      <!-- your content here -->
-      <router-view/>
-    </FadeTransition>
+    <!--   @TODO router view cannot be used inside of a transition anymore like that -->
+    <!--    <Transition>-->
+    <!--      &lt;!&ndash; your content here &ndash;&gt;-->
+    <!--      <router-view />-->
+    <!--    </Transition>-->
   </div>
 </template>
 <script>
-import { FadeTransition } from 'vue2-transitions'
-export default {
-  components: {
-    FadeTransition
-  }
-}
+export default {}
 </script>
-<style></style>
+<style>
+  .v-enter-active,
+  .v-leave-active {
+    transition: opacity 0.2s ease-out;
+  }
+  .v-enter-from,
+  .v-leave-to {
+    opacity: 0;
+  }
+</style>

@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = exports = {
   root: true,
   env: {
     node: true
@@ -9,9 +9,16 @@ module.exports = {
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'vue/multi-word-component-names': 'off',
+    'vue/no-useless-template-attributes': 'off',
+    'vue/no-v-html': 'off',
+    'no-unused-components': 'off'
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    ecmaVersion: 2020,
+    parser: '@babel/eslint-parser',
+    requireConfigFile: false,
+    sourceType: 'module'
   }
 }

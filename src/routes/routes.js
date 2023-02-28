@@ -184,7 +184,7 @@ const authPages = {
       }
     },
     // if no route matched -> 404 page
-    { path: '*', component: NotFound }
+    { path: '/:pathMatch(.*)*', component: NotFound }
   ]
 }
 

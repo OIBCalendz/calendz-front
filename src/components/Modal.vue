@@ -1,5 +1,5 @@
 <template>
-  <SlideYUpTransition :duration="animationDuration">
+  <Transition>
     <div
       v-show="show"
       :class="[{'show d-block': show}, {'d-none': !show}, {'modal-mini': type === 'mini'}]"
@@ -7,20 +7,22 @@
       class="modal fade"
       tabindex="-1"
       role="dialog"
-      @click.self="closeModal">
-
+      @click.self="closeModal"
+    >
       <div
         :class="[{'modal-notice': type === 'notice', [`modal-${size}`]: size}, modalClasses]"
-        class="modal-dialog modal-dialog-centered">
+        class="modal-dialog modal-dialog-centered"
+      >
         <div
           :class="[gradient ? `bg-gradient-${gradient}` : '',modalContentClasses]"
-          class="modal-content">
-
+          class="modal-content"
+        >
           <div
             v-if="$slots.header"
             :class="[headerClasses]"
-            class="modal-header">
-            <slot name="header"/>
+            class="modal-header"
+          >
+            <slot name="header" />
             <slot name="close-button">
               <button
                 v-if="showClose"
@@ -28,7 +30,8 @@
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                @click="closeModal">
+                @click="closeModal"
+              >
                 <span :aria-hidden="!show">×</span>
               </button>
             </slot>
@@ -36,30 +39,27 @@
 
           <div
             :class="bodyClasses"
-            class="modal-body">
-            <slot/>
+            class="modal-body"
+          >
+            <slot />
           </div>
 
           <div
             v-if="$slots.footer"
             :class="footerClasses"
-            class="modal-footer">
-            <slot name="footer"/>
+            class="modal-footer"
+          >
+            <slot name="footer" />
           </div>
         </div>
       </div>
-
     </div>
-  </SlideYUpTransition>
+  </Transition>
 </template>
 <script>
-import { SlideYUpTransition } from 'vue2-transitions'
 
 export default {
   name: 'Modal',
-  components: {
-    SlideYUpTransition
-  },
   props: {
     show: {
       type: Boolean,
@@ -74,7 +74,7 @@ export default {
       type: String,
       default: '',
       validator (value) {
-        let acceptedValues = ['', 'notice', 'mini']
+        const acceptedValues = ['', 'notice', 'mini']
         return acceptedValues.indexOf(value) !== -1
       },
       description: 'Modal type (notice|mini|"") '
@@ -88,7 +88,7 @@ export default {
       type: String,
       description: 'Modal size',
       validator (value) {
-        let acceptedValues = ['', 'sm', 'lg']
+        const acceptedValues = ['', 'sm', 'lg']
         return acceptedValues.indexOf(value) !== -1
       },
       default: ''
@@ -126,7 +126,7 @@ export default {
   },
   watch: {
     show (val) {
-      let documentClasses = document.body.classList
+      const documentClasses = document.body.classList
       if (val) {
         documentClasses.add('modal-open')
       } else {
@@ -143,6 +143,7 @@ export default {
 }
 </script>
 <style>
+/*@TODO transition: SlideYUp :duration="animationDuration"*/
   .modal.show {
     background-color: rgba(0, 0, 0, 0.3);
   }

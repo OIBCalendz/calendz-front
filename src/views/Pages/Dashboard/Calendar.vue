@@ -5,32 +5,36 @@
     <!-- ======================================= -->
     <base-header
       type="primary"
-      class="pb-6">
+      class="pb-6"
+    >
       <div class="row align-items-center py-4">
         <div class="col-5">
-          <h6 class="h2 text-white d-inline-block mb-0">Emploi du temps</h6>
+          <h6 class="h2 text-white d-inline-block mb-0">
+            Emploi du temps
+          </h6>
           <nav
             aria-label="breadcrumb"
-            class="d-none d-md-inline-block ml-md-4">
-            <route-bread-crumb/>
+            class="d-none d-md-inline-block ml-md-4"
+          >
+            <route-bread-crumb />
           </nav>
         </div>
         <div class="col-7 text-right">
-
           <form
             v-if="windowWidth > 1095"
             class="agenda-search navbar-search navbar-search-light d-inline-block mr-3"
             @submit.prevent
             @change="handleSearchInputChange"
             @mouseenter="handleSearchInputMouseEnter"
-            @mouseleave="handleSearchInputMouseLeave">
-
+            @mouseleave="handleSearchInputMouseLeave"
+          >
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
                   <span
                     class="input-group-text"
-                    style="padding: .9rem 1rem"><i class="fas fa-search"/></span>
+                    style="padding: .9rem 1rem"
+                  ><i class="fas fa-search" /></span>
                 </div>
                 <input
                   id="agenda-search-input"
@@ -39,11 +43,13 @@
                   class="form-control p-0"
                   placeholder="Entrez : prénom.nom"
                   type="text"
-                  style="width: 0">
+                  style="width: 0"
+                >
                 <div
                   class="input-group-text input-group-append text-black"
-                  @click="handleSearchInputClear">
-                  <i class="fas fa-times"/>
+                  @click="handleSearchInputClear"
+                >
+                  <i class="fas fa-times" />
                 </div>
               </div>
             </div>
@@ -53,45 +59,51 @@
             <a
               href=""
               class="fullcalendar-btn-prev btn btn-sm btn-default my-1"
-              @click.prevent="prev">
-              <i class="fas fa-angle-left"/>
+              @click.prevent="prev"
+            >
+              <i class="fas fa-angle-left" />
             </a>
             <a
               href=""
               class="fullcalendar-btn-next btn btn-sm btn-default my-1"
-              @click.prevent="next">
-              <i class="fas fa-angle-right"/>
+              @click.prevent="next"
+            >
+              <i class="fas fa-angle-right" />
             </a>
             <base-button
-              :class="{'active': activeView === 'dayGridMonth'}"
+              :class="{'active': initialView === 'dayGridMonth'}"
               class="btn btn-sm btn-default my-1"
-              @click="changeView('dayGridMonth')">
+              @click="changeView('dayGridMonth')"
+            >
               Mois
             </base-button>
             <base-button
-              :class="{'active': activeView === 'timeGridWeek'}"
+              :class="{'active': initialView === 'timeGridWeek'}"
               class="btn btn-sm btn-defaul my-1"
-              @click="changeView('timeGridWeek')">
+              @click="changeView('timeGridWeek')"
+            >
               Semaine
             </base-button>
             <base-button
-              :class="{'active': activeView === 'timeGridDay'}"
+              :class="{'active': initialView === 'timeGridDay'}"
               class="btn btn-sm btn-default mr-2 my-1"
-              @click="changeView('timeGridDay')">
+              @click="changeView('timeGridDay')"
+            >
               Jour
             </base-button>
             <el-tooltip
               content="Forcer la réactualisation"
-              placement="top">
+              placement="top"
+            >
               <base-button
                 type="default"
                 class="btn btn-sm py-2 my-1"
-                @click="reload()">
-                <i class="fas fa-sync-alt"/>
+                @click="reload()"
+              >
+                <i class="fas fa-sync-alt" />
               </base-button>
             </el-tooltip>
           </div>
-
         </div>
       </div>
     </base-header>
@@ -102,22 +114,25 @@
     <div
       v-touch:swipe.left="handleSwipeLeft"
       v-touch:swipe.right="handleSwipeRight"
-      class="container-fluid mt--6">
+      class="container-fluid mt--6"
+    >
       <div class="row">
         <div class="col">
           <!-- Fullcalendar -->
           <div class="card card-calendar">
-
             <!-- Card header -->
             <div class="card-header py-3">
               <div class="row align-items-center">
                 <div class="col-7">
-                  <h5 class="h3 mb-0">{{ headerDate }}</h5>
+                  <h5 class="h3 mb-0">
+                    {{ headerDate }}
+                  </h5>
                 </div>
                 <div class="col-5 text-right">
                   <base-button
                     class="btn btn-sm btn-default"
-                    @click="backToToday()">
+                    @click="backToToday()"
+                  >
                     Revenir à aujourd'hui
                   </base-button>
                 </div>
@@ -127,32 +142,13 @@
             <!-- Card body -->
             <div
               :class="{ 'bg-other-agenda': searchInput.includes('.') }"
-              class="card-body p-0 card-calendar-body">
+              class="card-body p-0 card-calendar-body"
+            >
               <full-calendar
                 id="calendar"
                 ref="fullCalendar"
-                :events="isLoading ? placeholderEvents : fullcalendarEvents"
-                :plugins="calendarPlugins"
-                :editable="false"
-                :theme="false"
-                :selectable="false"
-                :select-helper="true"
-                :default-view="activeView"
-                :weekends="false"
-                :all-day-slot="true"
-                :all-day-text="'Tâches'"
-                :column-header-format="getColumnHeaderFormat()"
-                :event-render="customRender"
-                :now-indicator="true"
-                :fixed-week-count="false"
-                :event-color="`#${user.settings.calendarColor}`"
-                content-height="auto"
-                slot-duration="01:00:00"
-                min-time="08:00:00"
-                max-time="20:00:00"
+                :options="calendarOptions"
                 class="calendar"
-                @eventClick="handleEventClick"
-                @dateClick="handleDateClick"
               />
             </div>
           </div>
@@ -164,11 +160,15 @@
     <!-- == Course detail modal ================= -->
     <!-- ======================================== -->
     <modal
-      :show.sync="showCourseModal">
+      :show.sync="showCourseModal"
+    >
       <template
         slot="header"
-        class="pb-0">
-        <h2 class="mb-0">Détail du cours</h2>
+        class="pb-0"
+      >
+        <h2 class="mb-0">
+          Détail du cours
+        </h2>
       </template>
 
       <div class="row">
@@ -195,7 +195,8 @@
 
       <div
         v-if="courseModal.remote"
-        class="row">
+        class="row"
+      >
         <hr class="mt-3 mb-4">
 
         <div class="col-12">
@@ -205,17 +206,21 @@
             v-if="courseModal.link"
             :href="courseModal.link"
             target="_blank"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer"
+          >
             <base-button
               type="primary"
-              size="sm">
+              size="sm"
+            >
               <div
                 class="bg-white rounded-circle shadow"
-                style="padding: 4px; margin-right: 6px">
+                style="padding: 4px; margin-right: 6px"
+              >
                 <img
                   style="height: 14px; width: 18px"
                   src="/img/icons/teams.svg"
-                  alt="Teams">
+                  alt="Teams"
+                >
               </div>
               Rejoindre le cours
             </base-button>
@@ -241,33 +246,37 @@
           v-for="(task, index) in courseModal.tasks"
           :key="index"
           :class="courseModal.tasks.length-1 !== index ? 'mb-4 pb-2' : ''"
-          class="row ">
+          class="row "
+        >
           <!-- type -->
           <div class="col-2 px-0 text-center my-auto">
-            <task-type :task="task"/>
+            <task-type :task="task" />
           </div>
 
           <!-- core -->
           <div class="col-8 px-2 my-auto">
-            <task-core :task="task"/>
+            <task-core :task="task" />
           </div>
 
           <!-- actions -->
           <div
             :class="windowWidth < 800 ? 'px-0' : ''"
-            class="col my-auto">
+            class="col my-auto"
+          >
             <div class="d-flex">
               <el-tooltip
                 :content="isTaskDone(task._id) ? 'Marquer comme non fait' : 'Marquer comme fait'"
-                placement="top">
+                placement="top"
+              >
                 <base-button
                   :outline="!isTaskDone(task._id)"
                   :class="isTaskDone(task._id) ? 'text-white' : 'text-success'"
                   size="sm"
                   type="success"
                   class="is-done-checkbox"
-                  @click="toggleTaskDone(task._id)">
-                  <i class="fas fa-check"/>
+                  @click="toggleTaskDone(task._id)"
+                >
+                  <i class="fas fa-check" />
                 </base-button>
               </el-tooltip>
             </div>
@@ -283,13 +292,15 @@
           type="secondary"
           size="md"
           class="text-default"
-          @click="gotoTaskCreation()">
+          @click="gotoTaskCreation()"
+        >
           Ajouter une tâche
         </base-button>
         <base-button
           type="primary"
           size="md"
-          @click="showCourseModal = false">
+          @click="showCourseModal = false"
+        >
           Fermer
         </base-button>
       </template>
@@ -301,43 +312,49 @@
     <modal :show.sync="showTaskModal">
       <template
         slot="header"
-        class="pb-0">
+        class="pb-0"
+      >
         <h2 class="mb-0">
           Tâche{{ taskModal.tasks && taskModal.tasks.length > 1 ? 's' : '' }}
-          du {{ taskModal.date }}</h2>
+          du {{ taskModal.date }}
+        </h2>
       </template>
 
       <div
         v-for="(task, index) in taskModal.tasks"
         :key="index"
         :class="taskModal.tasks.length-1 !== index ? 'mb-4 pb-2' : ''"
-        class="row ">
+        class="row "
+      >
         <!-- type -->
         <div class="col-2 px-0 text-center my-auto">
-          <task-type :task="task"/>
+          <task-type :task="task" />
         </div>
 
         <!-- core -->
         <div class="col-8 px-2 my-auto">
-          <task-core :task="task"/>
+          <task-core :task="task" />
         </div>
 
         <!-- actions -->
         <div
           :class="windowWidth < 800 ? 'px-0' : ''"
-          class="col my-auto">
+          class="col my-auto"
+        >
           <div class="d-flex">
             <el-tooltip
               :content="isTaskDone(task._id) ? 'Marquer comme non fait' : 'Marquer comme fait'"
-              placement="top">
+              placement="top"
+            >
               <base-button
                 :outline="!isTaskDone(task._id)"
                 :class="isTaskDone(task._id) ? 'text-white' : 'text-success'"
                 size="sm"
                 type="success"
                 class="is-done-checkbox"
-                @click="toggleTaskDone(task._id)">
-                <i class="fas fa-check"/>
+                @click="toggleTaskDone(task._id)"
+              >
+                <i class="fas fa-check" />
               </base-button>
             </el-tooltip>
           </div>
@@ -348,7 +365,10 @@
         <base-button
           type="primary"
           size="md"
-          @click="showTaskModal = false">Fermer</base-button>
+          @click="showTaskModal = false"
+        >
+          Fermer
+        </base-button>
       </template>
     </modal>
   </div>
@@ -356,25 +376,188 @@
 <script>
 import { mapGetters } from 'vuex'
 import { Modal } from '@/components'
-import FullCalendar from '@fullcalendar/vue'
+import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import dateUtilMixin from '@/mixins/dateUtilMixin'
 import stringUtilMixin from '@/mixins/stringUtilMixin'
+import BaseHeader from '@/components/BaseHeader.vue'
+import RouteBreadCrumb from '@/components/Breadcrumb/RouteBreadcrumb.vue'
+import BaseButton from '@/components/BaseButton.vue'
 
 export default {
   name: 'Calendar',
   components: {
+    BaseButton,
+    RouteBreadCrumb,
+    BaseHeader,
     FullCalendar,
     Modal
   },
   mixins: [dateUtilMixin, stringUtilMixin],
   data () {
     return {
+      initialView: 'timeGridWeek',
+      calendarOptions: {
+        initialDate: new Date(),
+        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+        headerToolbar: false,
+        initialView: this.initialView,
+        dayHeaderFormat: this.getColumnHeaderFormat(),
+        nowIndicator: true,
+        fixedWeekCount: false,
+        // @TODO: fix the calendar color
+        eventColor: '#f1f1f1', // `#${this.user.settings.calendarColor}`,
+        contentHeight: 'auto',
+        slotDuration: '01:00:00',
+        slotMinTime: '08:00:00',
+        slotMaxTime: '20:00:00',
+        events: this.isLoading ? this.placeholderEvents : this.fullcalendarEvents, // alternatively, use the `events` setting to fetch from a feed
+        editable: false,
+        selectable: false,
+        selectMirror: true,
+        dayMaxEvents: true,
+        weekends: false,
+        eventClick: this.handleEventClick,
+        dateClick: this.handleDateClick,
+        eventDidMount: function (element) {
+          // render tasks
+          if (element.event.allDay) {
+            if (this.windowWidth < 800) {
+              // mobile month view
+              if (this.initialView === 'dayGridMonth') {
+                element.el.innerHTML = `
+            <div class="h5 custom-allday-event float-right my-0 mt--4-5">
+              <span class="badge badge-sm badge-default badge-circle badge-floating border-white">${element.event.extendedProps.amount}</span>
+            </div>`
+                return
+                // mobile week view
+              } else if (this.initialView === 'timeGridWeek') {
+                element.el.innerHTML = `
+            <div class="h5 custom-allday-event text-center mt-2">
+              <span class="badge badge-sm badge-default badge-circle badge-floating border-white">${element.event.extendedProps.amount}</span>
+            </div>`
+                return
+              }
+            }
+
+            // desktop month view
+            if (this.initialView === 'dayGridMonth' && this.windowWidth > 800) {
+              element.el.innerHTML = `
+          <div class="h4 custom-allday-event float-right my-0 mt--4-5">
+            <div class="badge badge-lg badge-primary py-1">
+              <span class="pr-2">Tâches</span>
+              <span class="badge badge-sm badge-default badge-circle badge-floating border-white">${element.event.extendedProps.amount}</span>
+            </div>
+          </div>`
+              return
+            }
+
+            element.el.innerHTML = `
+          <div class="h3 custom-allday-event text-center my-0 hover-pointer">
+            <div class="badge badge-lg badge-primary py-1">
+              <span class="pr-2">Afficher les devoirs</span>
+              <span class="badge badge-sm badge-default badge-circle badge-floating border-white">${element.event.extendedProps.amount}</span>
+            </div>
+          </div>`
+            return
+          }
+
+          let html = ''
+          // add task badge on course
+          if (!(this.initialView === 'dayGridMonth' && this.windowWidth < 800)) {
+            // if course has corresponsponding task
+            if (this.allTasks.some(task => {
+              const sameDay = this.isSameDay(this.timestampToDate(task.date), element.event.start)
+              const sameSubject = task.subject ? element.event.title.toLowerCase().includes(task.subject.toLowerCase()) : false
+              return (sameDay && sameSubject)
+            })) {
+              html += `
+            <span class="h5-5 mr-2 mt-2 badge badge-light badge-circle float-right" style="width: 12px; height: 12px;"> </span>
+          `
+            }
+          }
+
+          // render events
+          switch (this.initialView) {
+            // ============================
+            // == MONTH VIEW
+            // ============================
+            case 'dayGridMonth':
+              if (this.windowWidth < 800) {
+                html += `
+              <div>
+                <h5 class="pl-1 mb-0 text-white w-auto">
+                  ${this.timeToHour(element.event.start, 'h').slice(0, -3)}-${this.timeToHour(element.event.end, 'h').slice(0, -2)}
+                </h5>
+              </div>`
+              } else {
+                html += `
+              <div>
+                <h5 class="pl-1 mb-0 text-white w-auto">
+                  ${this.timeToHour(element.event.start, 'h').slice(0, -2)}
+                  <span class="ml-1 h5 text-white">${element.event.title}</span>
+                </h5>
+              </div>`
+              }
+              break
+            // ============================
+            // == WEEK VIEW
+            // ============================
+            case 'timeGridWeek':
+              if (this.windowWidth < 800) {
+                html += `
+              <div>
+                <h4 class="text-white text-center w-100" style="position: absolute; top: 50%; transform: translateY(-50%);">${element.event.title}</h4>
+              </div>`
+              } else {
+                html += `
+              <div>
+                <h5 class="h5-5 pl-2 mt-1 text-white">${this.timeToHour(element.event.start)} - ${this.timeToHour(element.event.end)}</h5>
+                ${element.event.extendedProps.bts ? '<div class="ribbon ribbon-top-right"><span>BTS</span></div>' : ''}
+                ${element.event.extendedProps.remote ? '<div class="ribbon ribbon-bottom-right"><span>TEAMS</span></div>' : ''}
+                <h3 class="px-2 text-white text-center" style="max-width: 90%; width: 90%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">${element.event.title}</h3>
+                <h5 class="h5-5 pl-2 mb-1 text-white col-7" style="position: absolute; bottom: 0; left: 0">${this.capitalizeFirstLetterEachWords(element.event.extendedProps.professor)}<h5>
+                ${element.event.extendedProps.remote ? '' : `<h5 class="h5-5 pr-2 mb-1 text-white col-3 text-right" style="position: absolute; bottom: 0; right: 0">${element.event.extendedProps.room}<h5>`}
+              </div>`
+              }
+              break
+            // ============================
+            // == DAY VIEW
+            // ============================
+            case 'timeGridDay':
+              if (this.windowWidth < 800) {
+                html += `
+              <div>
+                <h5 class="h5-5 pl-2 mt-1 text-white">${this.timeToHour(element.event.start)} - ${this.timeToHour(element.event.end)}</h5>
+                ${element.event.extendedProps.bts ? '<div class="ribbon ribbon-top-right"><span>BTS</span></div>' : ''}
+                ${element.event.extendedProps.remote ? '<div class="ribbon ribbon-bottom-right"><span>TEAMS</span></div>' : ''}
+                <h2 class="text-white text-center w-100" style="position: absolute; top: 50%; transform: translateY(-50%);">${element.event.title}</h2>
+                <h5 class="h5-5 pl-2 mb-1 text-white" style="position: absolute; bottom: 0; left: 0">${this.capitalizeFirstLetterEachWords(element.event.extendedProps.professor)}<h5>
+                ${element.event.extendedProps.remote ? '' : `<h5 class="h5-5 pr-2 mb-1 text-white col-3 text-right" style="position: absolute; bottom: 0; right: 0">${element.event.extendedProps.room}<h5>`}
+              </div>`
+              } else {
+                html += `
+              <div>
+                <h5 class="h5-5 pl-2 mt-1 text-white">${this.timeToHour(element.event.start)} - ${this.timeToHour(element.event.end)}</h5>
+                ${element.event.extendedProps.bts ? '<div class="ribbon ribbon-top-right"><span>BTS</span></div>' : ''}
+                ${element.event.extendedProps.remote ? '<div class="ribbon ribbon-bottom-right"><span>TEAMS</span></div>' : ''}
+                <h3 class="px-2 text-white text-center" style="max-width: 90%; width: 90%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">${element.event.title}</h3>
+                <h5 class="h5-5 pl-2 mb-1 text-white col-7" style="position: absolute; bottom: 0; left: 0">${this.capitalizeFirstLetterEachWords(element.event.extendedProps.professor)}<h5>
+                ${element.event.extendedProps.remote ? '' : `<h5 class="h5-5 pr-2 mb-1 text-white col-3 text-right" style="position: absolute; bottom: 0; right: 0">${element.event.extendedProps.room}<h5>`}
+              </div>`
+              }
+              break
+          }
+
+          // apply new style
+          return { html }
+        }
+      },
       placeholderEvents: [{
         title: '',
-        daysOfWeek: [ '1' ],
+        daysOfWeek: ['1'],
         startTime: '14:00:00',
         endTime: '18:00:00',
         className: 'loading-event',
@@ -382,7 +565,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '1' ],
+        daysOfWeek: ['1'],
         startTime: '09:00:00',
         endTime: '13:00:00',
         className: 'loading-event',
@@ -390,7 +573,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '2' ],
+        daysOfWeek: ['2'],
         startTime: '08:00:00',
         endTime: '12:00:00',
         className: 'loading-event',
@@ -398,7 +581,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '2' ],
+        daysOfWeek: ['2'],
         startTime: '13:00:00',
         endTime: '17:00:00',
         className: 'loading-event',
@@ -406,7 +589,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '3' ],
+        daysOfWeek: ['3'],
         startTime: '14:00:00',
         endTime: '18:00:00',
         className: 'loading-event',
@@ -414,7 +597,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '3' ],
+        daysOfWeek: ['3'],
         startTime: '09:00:00',
         endTime: '13:00:00',
         className: 'loading-event',
@@ -422,7 +605,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '4' ],
+        daysOfWeek: ['4'],
         startTime: '08:00:00',
         endTime: '12:00:00',
         className: 'loading-event',
@@ -430,7 +613,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '4' ],
+        daysOfWeek: ['4'],
         startTime: '13:00:00',
         endTime: '17:00:00',
         className: 'loading-event',
@@ -438,7 +621,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '5' ],
+        daysOfWeek: ['5'],
         startTime: '14:00:00',
         endTime: '18:00:00',
         className: 'loading-event',
@@ -446,7 +629,7 @@ export default {
         room: ''
       }, {
         title: '',
-        daysOfWeek: [ '5' ],
+        daysOfWeek: ['5'],
         startTime: '09:00:00',
         endTime: '13:00:00',
         className: 'loading-event',
@@ -457,9 +640,6 @@ export default {
       courseModal: {},
       showTaskModal: false,
       showCourseModal: false,
-      calendarPlugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-      activeView: 'timeGridWeek',
-      activeDate: new Date(),
       windowWidth: window.innerWidth,
       headerDate: '',
       searchInput: '',
@@ -557,141 +737,9 @@ export default {
     // ======================================
     // == CALENDAR RENDERING
     // ======================================
-    customRender (element) {
-      // render tasks
-      if (element.event.allDay) {
-        if (this.windowWidth < 800) {
-          // mobile month view
-          if (this.activeView === 'dayGridMonth') {
-            element.el.innerHTML = `
-            <div class="h5 custom-allday-event float-right my-0 mt--4-5">
-              <span class="badge badge-sm badge-default badge-circle badge-floating border-white">${element.event.extendedProps.amount}</span>
-            </div>`
-            return
-          // mobile week view
-          } else if (this.activeView === 'timeGridWeek') {
-            element.el.innerHTML = `
-            <div class="h5 custom-allday-event text-center mt-2">
-              <span class="badge badge-sm badge-default badge-circle badge-floating border-white">${element.event.extendedProps.amount}</span>
-            </div>`
-            return
-          }
-        }
 
-        // desktop month view
-        if (this.activeView === 'dayGridMonth' && this.windowWidth > 800) {
-          element.el.innerHTML = `
-          <div class="h4 custom-allday-event float-right my-0 mt--4-5">
-            <div class="badge badge-lg badge-primary py-1">
-              <span class="pr-2">Tâches</span>
-              <span class="badge badge-sm badge-default badge-circle badge-floating border-white">${element.event.extendedProps.amount}</span>
-            </div>
-          </div>`
-          return
-        }
-
-        element.el.innerHTML = `
-          <div class="h3 custom-allday-event text-center my-0 hover-pointer">
-            <div class="badge badge-lg badge-primary py-1">
-              <span class="pr-2">Afficher les devoirs</span>
-              <span class="badge badge-sm badge-default badge-circle badge-floating border-white">${element.event.extendedProps.amount}</span>
-            </div>
-          </div>`
-        return
-      }
-
-      let html = ''
-      // add task badge on course
-      if (!(this.activeView === 'dayGridMonth' && this.windowWidth < 800)) {
-        // if course has corresponsponding task
-        if (this.allTasks.some(task => {
-          const sameDay = this.isSameDay(this.timestampToDate(task.date), element.event.start)
-          const sameSubject = task.subject ? element.event.title.toLowerCase().includes(task.subject.toLowerCase()) : false
-          return (sameDay && sameSubject)
-        })) {
-          html += `
-            <span class="h5-5 mr-2 mt-2 badge badge-light badge-circle float-right" style="width: 12px; height: 12px;"> </span>
-          `
-        }
-      }
-
-      // render events
-      switch (this.activeView) {
-        // ============================
-        // == MONTH VIEW
-        // ============================
-        case 'dayGridMonth':
-          if (this.windowWidth < 800) {
-            html += `
-              <div>
-                <h5 class="pl-1 mb-0 text-white w-auto">
-                  ${this.timeToHour(element.event.start, 'h').slice(0, -3)}-${this.timeToHour(element.event.end, 'h').slice(0, -2)}
-                </h5>
-              </div>`
-          } else {
-            html += `
-              <div>
-                <h5 class="pl-1 mb-0 text-white w-auto">
-                  ${this.timeToHour(element.event.start, 'h').slice(0, -2)}
-                  <span class="ml-1 h5 text-white">${element.event.title}</span>
-                </h5>
-              </div>`
-          }
-          break
-        // ============================
-        // == WEEK VIEW
-        // ============================
-        case 'timeGridWeek':
-          if (this.windowWidth < 800) {
-            html += `
-              <div>
-                <h4 class="text-white text-center w-100" style="position: absolute; top: 50%; transform: translateY(-50%);">${element.event.title}</h4>
-              </div>`
-          } else {
-            html += `
-              <div>
-                <h5 class="h5-5 pl-2 mt-1 text-white">${this.timeToHour(element.event.start)} - ${this.timeToHour(element.event.end)}</h5>
-                ${element.event.extendedProps.bts ? '<div class="ribbon ribbon-top-right"><span>BTS</span></div>' : ''}
-                ${element.event.extendedProps.remote ? '<div class="ribbon ribbon-bottom-right"><span>TEAMS</span></div>' : ''}
-                <h3 class="px-2 text-white text-center" style="max-width: 90%; width: 90%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">${element.event.title}</h3>
-                <h5 class="h5-5 pl-2 mb-1 text-white col-7" style="position: absolute; bottom: 0; left: 0">${this.capitalizeFirstLetterEachWords(element.event.extendedProps.professor)}<h5>
-                ${element.event.extendedProps.remote ? '' : `<h5 class="h5-5 pr-2 mb-1 text-white col-3 text-right" style="position: absolute; bottom: 0; right: 0">${element.event.extendedProps.room}<h5>`}
-              </div>`
-          }
-          break
-        // ============================
-        // == DAY VIEW
-        // ============================
-        case 'timeGridDay':
-          if (this.windowWidth < 800) {
-            html += `
-              <div>
-                <h5 class="h5-5 pl-2 mt-1 text-white">${this.timeToHour(element.event.start)} - ${this.timeToHour(element.event.end)}</h5>
-                ${element.event.extendedProps.bts ? '<div class="ribbon ribbon-top-right"><span>BTS</span></div>' : ''}
-                ${element.event.extendedProps.remote ? '<div class="ribbon ribbon-bottom-right"><span>TEAMS</span></div>' : ''}
-                <h2 class="text-white text-center w-100" style="position: absolute; top: 50%; transform: translateY(-50%);">${element.event.title}</h2>
-                <h5 class="h5-5 pl-2 mb-1 text-white" style="position: absolute; bottom: 0; left: 0">${this.capitalizeFirstLetterEachWords(element.event.extendedProps.professor)}<h5>
-                ${element.event.extendedProps.remote ? '' : `<h5 class="h5-5 pr-2 mb-1 text-white col-3 text-right" style="position: absolute; bottom: 0; right: 0">${element.event.extendedProps.room}<h5>`}
-              </div>`
-          } else {
-            html += `
-              <div>
-                <h5 class="h5-5 pl-2 mt-1 text-white">${this.timeToHour(element.event.start)} - ${this.timeToHour(element.event.end)}</h5>
-                ${element.event.extendedProps.bts ? '<div class="ribbon ribbon-top-right"><span>BTS</span></div>' : ''}
-                ${element.event.extendedProps.remote ? '<div class="ribbon ribbon-bottom-right"><span>TEAMS</span></div>' : ''}
-                <h3 class="px-2 text-white text-center" style="max-width: 90%; width: 90%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">${element.event.title}</h3>
-                <h5 class="h5-5 pl-2 mb-1 text-white col-7" style="position: absolute; bottom: 0; left: 0">${this.capitalizeFirstLetterEachWords(element.event.extendedProps.professor)}<h5>
-                ${element.event.extendedProps.remote ? '' : `<h5 class="h5-5 pr-2 mb-1 text-white col-3 text-right" style="position: absolute; bottom: 0; right: 0">${element.event.extendedProps.room}<h5>`}
-              </div>`
-          }
-          break
-      }
-
-      // apply new style
-      element.el.innerHTML = html
-    },
     handleDateClick (clicked) {
-      if (this.activeView === 'dayGridMonth') {
+      if (this.initialView === 'dayGridMonth') {
         this.calendarApi().gotoDate(clicked.date)
         this.changeView('timeGridWeek')
       }
@@ -700,7 +748,7 @@ export default {
       // task
       if (clicked.event.allDay) {
         // do nothing in mobile month view
-        if (this.activeView === 'dayGridMonth' && this.windowWidth < 800) return
+        if (this.initialView === 'dayGridMonth' && this.windowWidth < 800) return
 
         this.showTaskModal = true
         this.taskModal.date = this.dateToFullString(clicked.event.start)
@@ -710,7 +758,7 @@ export default {
       }
 
       // event
-      if (this.activeView === 'dayGridMonth') {
+      if (this.initialView === 'dayGridMonth') {
         this.calendarApi().gotoDate(clicked.event.start)
         this.changeView('timeGridWeek')
         return
@@ -732,10 +780,10 @@ export default {
       })
     },
     // ===========================================
-    // == Naviguation functions
+    // == Navigation functions
     // ===========================================
     changeView (viewType) {
-      this.activeView = viewType
+      this.initialView = viewType
       this.activeDate = this.calendarApi().getDate()
 
       if (viewType === 'dayGridMonth') {
@@ -760,7 +808,9 @@ export default {
     next () {
       let toAdd
       let dateToFetch = this.activeDate
-      switch (this.activeView) {
+      const firstOfTheMonth = this.getFirstFridayOfMonth(dateToFetch)
+
+      switch (this.initialView) {
         case 'timeGridWeek':
           toAdd = 7
           if (dateToFetch.getDay() === 6) toAdd = 8
@@ -769,8 +819,6 @@ export default {
           break
         case 'dayGridMonth':
           dateToFetch = this.getMonday(dateToFetch.setMonth(dateToFetch.getMonth() + 1))
-
-          const firstOfTheMonth = this.getFirstFridayOfMonth(dateToFetch)
           this.$store.dispatch('calendar/fetchDate', { date: this.dateToMonthDayYear(firstOfTheMonth.setDate(firstOfTheMonth.getDate())) })
           this.$store.dispatch('calendar/fetchDate', { date: this.dateToMonthDayYear(firstOfTheMonth.setDate(firstOfTheMonth.getDate() + 7)) })
           this.$store.dispatch('calendar/fetchDate', { date: this.dateToMonthDayYear(firstOfTheMonth.setDate(firstOfTheMonth.getDate() + 7)) })
@@ -798,8 +846,9 @@ export default {
     prev () {
       let toRemove = 7
       let dateToFetch = this.activeDate
+      const firstOfTheMonth = this.getFirstFridayOfMonth(dateToFetch)
 
-      switch (this.activeView) {
+      switch (this.initialView) {
         case 'timeGridWeek':
           toRemove = 7
           if (dateToFetch.getDay() === 6) toRemove = 6
@@ -808,8 +857,6 @@ export default {
           break
         case 'dayGridMonth':
           dateToFetch = this.getMonday(dateToFetch.setMonth(dateToFetch.getMonth() - 1))
-
-          const firstOfTheMonth = this.getFirstFridayOfMonth(dateToFetch)
           this.$store.dispatch('calendar/fetchDate', { date: this.dateToMonthDayYear(firstOfTheMonth.setDate(firstOfTheMonth.getDate())) })
           this.$store.dispatch('calendar/fetchDate', { date: this.dateToMonthDayYear(firstOfTheMonth.setDate(firstOfTheMonth.getDate() + 7)) })
           this.$store.dispatch('calendar/fetchDate', { date: this.dateToMonthDayYear(firstOfTheMonth.setDate(firstOfTheMonth.getDate() + 7)) })
@@ -849,7 +896,7 @@ export default {
       if (date.getDay() === 0) date.setDate(date.getDate() + 1)
       date = this.dateToMonthDayYear(date)
       this.$store.dispatch('calendar/resetFetchedWeeks')
-      this.$store.dispatch('calendar/fetchDate', { date: date, force: true })
+      this.$store.dispatch('calendar/fetchDate', { date, force: true })
     },
     // ===========================================
     // == Task functions
@@ -874,7 +921,7 @@ export default {
       this.headerDate = this.getMonthFromDate(this.calendarApi().getDate()) + ' ' + this.calendarApi().getDate().getFullYear()
     },
     getColumnHeaderFormat () {
-      switch (this.activeView) {
+      switch (this.initialView) {
         // week
         case 'timeGridWeek':
           if (this.windowWidth < 800) return { month: 'numeric', day: 'numeric', omitCommas: true }
@@ -916,16 +963,16 @@ export default {
       if (date.getDay() === 0) date.setDate(date.getDate() + 1)
       date = this.dateToMonthDayYear(date)
       this.$store.dispatch('calendar/resetFetchedWeeks')
-      this.$store.dispatch('calendar/fetchDate', { date: date })
+      this.$store.dispatch('calendar/fetchDate', { date })
     }
   }
 }
 </script>
 
 <style lang="scss">
-  @import "~@fullcalendar/core/main.css";
-  @import '~@fullcalendar/daygrid/main.css';
-  @import '~@fullcalendar/timegrid/main.css';
+  // @import "~@fullcalendar/core/main.css";
+  // @import '~@fullcalendar/daygrid/main.css';
+  // @import '~@fullcalendar/timegrid/main.css';
   @import "~@/assets/sass/core/vendors/fullcalendar";
 
   // =========================================
