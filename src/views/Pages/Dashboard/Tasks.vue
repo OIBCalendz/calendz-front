@@ -184,6 +184,28 @@
                       </template>
                     </el-table-column>
 
+ <!-- type -->
+                    <el-table-column
+                      prop="row.type"
+                      width="62px"
+                      min-width="62px"
+                      class="text-center"
+                    >
+                      <template #default="{row}">
+                        <div class="d-flex justify-content-center">
+                          <task-type
+                            v-show="!tasksLoading && !isLoading"
+                            :task="row"
+                          />
+
+                          <placeholder
+                            v-show="tasksLoading || isLoading"
+                            type="circle"
+                          />
+                        </div>
+                      </template>
+                    </el-table-column>
+                    
                     <!-- date -->
                     <el-table-column
                       sortable
