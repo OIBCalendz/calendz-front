@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { app } from '@/main'
 import swal from 'sweetalert2'
 import DateUtil from '../../mixins/dateUtilMixin'
 import TaskService from '../../services/task.service'
@@ -26,7 +26,7 @@ const tasksModule = {
       state.status = { isRetrieving: true }
     },
     FETCH_ALL_SUCCESS: (state, tasks) => {
-      state.tasks = tasks
+      state.tasks = tasks ?? [] // @TODO remove later
       state.status = {}
     },
     FETCH_ALL_FAILURE: (state, reason) => {
@@ -86,13 +86,13 @@ const tasksModule = {
           },
           err => {
             commit('FETCH_ALL_FAILURE', err.data.message)
-            Vue.prototype.$notify({ type: 'danger', message: `<b>Erreur !</b> ${err.data.message || 'Une erreur est survenue...'}` })
+            app.config.globalProperties.$notify({ type: 'danger', message: `<b>Erreur !</b> ${err.data.message || 'Une erreur est survenue...'}` })
           })
     },
 
     create: ({ commit }, { title, type, subject, date, description, targets }) => {
       commit('TASK_CREATE_REQUEST')
-      let newTargets = []
+      const newTargets = []
       if (targets.length > 0) {
         targets.forEach(target => {
           newTargets.push({ email: target })
@@ -138,18 +138,18 @@ const tasksModule = {
         .then(
           res => {
             commit('TASK_DELETE_SUCCESS', taskId)
-            Vue.prototype.$notify({ type: 'success', message: `La tâche a bien été supprimée !` })
+            app.config.globalProperties.$notify({ type: 'success', message: 'La tâche a bien été supprimée !' })
           },
           err => {
             commit('TASK_DELETE_FAILURE', err.data.message)
-            Vue.prototype.$notify({ type: 'danger', message: `<b>Erreur !</b> ${err.data.message || 'Une erreur est survenue...'}` })
+            app.config.globalProperties.$notify({ type: 'danger', message: `<b>Erreur !</b> ${err.data.message || 'Une erreur est survenue...'}` })
           })
     },
 
     modify: ({ commit }, { _id, title, type, subject, date, description, targets }) => {
       commit('TASK_MODIFY_REQUEST')
 
-      let newTargets = []
+      const newTargets = []
       targets.forEach(target => {
         if (newTargets.some(v => v.email === target)) return
         if (!target.email) newTargets.push({ email: target })
@@ -201,12 +201,12 @@ const tasksModule = {
     getAll: (state) => {
       const array = [...state.tasks]
       array.sort((a, b) => (a.date > b.date) ? -1 : 1)
-      return array
+      return array ?? [] // @TODO remove later
     },
     // all done tasks
     getAllDone: (state, getters, rootState) => {
       const doneTasks = rootState.account.user.tasks.done
-      let array = [...getters.getAll].filter(task => doneTasks.includes(task._id))
+      const array = [...getters.getAll].filter(task => doneTasks.includes(task._id))
       array.sort((a, b) => (a.date < b.date) ? -1 : 1)
       return array
     },
@@ -223,19 +223,23 @@ const tasksModule = {
     },
     // done tasks, in the future
     getDone: (state, getters, rootState) => {
-      const doneTasks = rootState.account.user.tasks.done
-      const array = [...getters.getUpcommings].filter(task => doneTasks.includes(task._id))
-      array.sort((a, b) => (a.date > b.date) ? -1 : 1)
-      return array
+      // @TODO uncomment later
+      // const doneTasks = rootState.account.user.tasks.done
+      // const array = [...getters.getUpcommings].filter(task => doneTasks.includes(task._id))
+      // array.sort((a, b) => (a.date > b.date) ? -1 : 1)
+      // return array
+      return []
     },
     // not done tasks, in the future
     getTodo: (state, getters, rootState) => {
-      const now = new Date().getTime()
-      const doneTasks = rootState.account.user.tasks.done
-      let array = [...getters.getUpcommings].filter(task => now <= parseInt(task.date) + 3600000 * 24)
-      array = array.filter(task => !doneTasks.includes(task._id))
-      array.sort((a, b) => (a.date < b.date) ? -1 : 1)
-      return array
+      // @TODO uncomment later
+      // const now = new Date().getTime()
+      // const doneTasks = rootState.account.user.tasks.done
+      // let array = [...getters.getUpcommings].filter(task => now <= parseInt(task.date) + 3600000 * 24)
+      // array = array.filter(task => !doneTasks.includes(task._id))
+      // array.sort((a, b) => (a.date < b.date) ? -1 : 1)
+      // return array
+      return []
     },
     // all tasks in the past
     getArchived: (state, getters) => {

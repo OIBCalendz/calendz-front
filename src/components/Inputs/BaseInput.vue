@@ -3,7 +3,8 @@
     <slot name="label">
       <label
         v-if="label"
-        :class="labelClasses">
+        :class="labelClasses"
+      >
         {{ label }}
       </label>
     </slot>
@@ -14,13 +15,15 @@
         {'input-group-alternative': alternative},
         {'has-label': label || $slots.label},
         inputGroupClasses
-    ]">
+      ]"
+    >
       <div
         v-if="prependIcon || $slots.prepend"
-        class="input-group-prepend">
+        class="input-group-prepend"
+      >
         <span class="input-group-text">
           <slot name="prepend">
-            <i :class="prependIcon"/>
+            <i :class="prependIcon" />
           </slot>
         </span>
       </div>
@@ -33,30 +36,33 @@
           :required="required"
           :class="[{'is-valid': valid === true}, {'is-invalid': error}, inputClasses]"
           class="form-control"
-          v-on="listeners">
+        >
       </slot>
       <div
         v-if="appendIcon || $slots.append"
-        class="input-group-append">
+        class="input-group-append"
+      >
         <span class="input-group-text">
           <slot name="append">
-            <i :class="appendIcon"/>
+            <i :class="appendIcon" />
           </slot>
         </span>
       </div>
-      <slot name="infoBlock"/>
+      <slot name="infoBlock" />
       <slot name="error">
         <div
           v-if="error"
           class="invalid-feedback"
-          style="display: block;">
+          style="display: block;"
+        >
           {{ error }}
         </div>
       </slot>
       <slot name="success">
         <div
           v-if="!error && valid"
-          class="valid-feedback">
+          class="valid-feedback"
+        >
           {{ successMessage }}
         </div>
       </slot>
@@ -147,7 +153,8 @@ export default {
   computed: {
     listeners () {
       return {
-        ...this.$listeners,
+        // @TODO: $listeners is deprecated, but i don't know what to replace it with
+        // ...this.$listeners,
         input: this.updateValue,
         focus: this.onFocus,
         blur: this.onBlur
@@ -173,7 +180,7 @@ export default {
   },
   methods: {
     updateValue (evt) {
-      let value = evt.target.value
+      const value = evt.target.value
       this.$emit('input', value)
     },
     onFocus (evt) {

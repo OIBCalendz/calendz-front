@@ -11,10 +11,12 @@
         <div class="col-4 text-right">
           <base-button
             type="default"
-            @click="toggle()">
+            @click="toggle()"
+          >
             <i
               :class="{ 'fa-rotate-90': expand }"
-              class="fas fa-chevron-right custom-transform"/>
+              class="fas fa-chevron-right custom-transform"
+            />
           </base-button>
         </div>
       </div>
@@ -22,7 +24,8 @@
 
     <ul
       v-if="users"
-      class="list-group list-group-flush list my--4 ">
+      class="list-group list-group-flush list my--4 "
+    >
       <li
         v-for="(user, index) in list.slice(0, Math.max(0, users.lastRegisters.length - 7))"
         :key="index"
@@ -33,10 +36,13 @@
             <img
               :src="user.avatarUrl === 'img/theme/default-pp.png' ? '/img/theme/default-pp.png' : user.avatarUrl"
               alt="Photo de profil"
-              class="avatar avatar-sm rounded-circle">
+              class="avatar avatar-sm rounded-circle"
+            >
           </div>
           <div class="col pr-0 ml--2">
-            <h5 class="mb-0">{{ `${user.firstname} ${user.lastname}` }}</h5>
+            <h5 class="mb-0">
+              {{ `${user.firstname} ${user.lastname}` }}
+            </h5>
             <span :class="`text-${user.isActive ? 'success' : 'danger'}`">● </span>
             <small>{{ `${user.grade} - ${user.city}` }}</small>
           </div>
@@ -44,14 +50,15 @@
             <base-button
               disabled
               size="sm"
-              type="info">
+              type="info"
+            >
               {{ dateToDayMonthYear(timestampToDate(user.creationDate)) }}
             </base-button>
           </div>
         </div>
       </li>
 
-      <collapse-transition>
+      <Transition>
         <div v-show="expand">
           <li
             v-for="(user, index) in list.slice(Math.max(users.lastRegisters.length - 7, 0))"
@@ -63,10 +70,13 @@
                 <img
                   :src="user.avatarUrl === 'img/theme/default-pp.png' ? '/img/theme/default-pp.png' : user.avatarUrl"
                   alt="Photo de profil"
-                  class="avatar avatar-sm rounded-circle">
+                  class="avatar avatar-sm rounded-circle"
+                >
               </div>
               <div class="col pr-0 ml--2">
-                <h5 class="mb-0">{{ `${user.firstname} ${user.lastname}` }}</h5>
+                <h5 class="mb-0">
+                  {{ `${user.firstname} ${user.lastname}` }}
+                </h5>
                 <span :class="`text-${user.isActive ? 'success' : 'danger'}`">● </span>
                 <small>{{ `${user.grade} - ${user.city}` }}</small>
               </div>
@@ -74,26 +84,23 @@
                 <base-button
                   disabled
                   size="sm"
-                  type="info">
+                  type="info"
+                >
                   {{ dateToDayMonthYear(timestampToDate(user.creationDate)) }}
                 </base-button>
               </div>
             </div>
           </li>
         </div>
-      </collapse-transition>
+      </Transition>
     </ul>
   </card>
 </template>
 
 <script>
 import dateUtilMixin from '@/mixins/dateUtilMixin'
-import { CollapseTransition } from 'vue2-transitions'
 
 export default {
-  components: {
-    CollapseTransition
-  },
   mixins: [dateUtilMixin],
   props: {
     users: {
@@ -120,9 +127,10 @@ export default {
 </script>
 
 <style>
-.custom-transform {
-  transition-property: all;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
+  /*@TODO transition: collapse*/
+  .custom-transform {
+    transition-property: all;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 </style>

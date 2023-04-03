@@ -1,5 +1,5 @@
 <template>
-  <fade-transition>
+  <Transition>
     <div
       v-if="visible"
       :class="[
@@ -9,20 +9,20 @@
       class="alert"
       role="alert"
     >
-      <slot v-if="!dismissible"/>
+      <slot v-if="!dismissible" />
       <template v-else>
-
         <template v-if="icon || $slots.icon">
           <slot name="icon">
             <span
               class="alert-icon"
-              data-notify="icon">
-              <i :class="icon"/>
+              data-notify="icon"
+            >
+              <i :class="icon" />
             </span>
           </slot>
         </template>
 
-        <span class="alert-text"> <slot/> </span>
+        <span class="alert-text"> <slot /> </span>
 
         <slot name="dismiss-icon">
           <button
@@ -30,22 +30,19 @@
             class="close"
             data-dismiss="alert"
             aria-label="Close"
-            @click="dismissAlert">
+            @click="dismissAlert"
+          >
             <span aria-hidden="true">×</span>
           </button>
         </slot>
       </template>
     </div>
-  </fade-transition>
+  </Transition>
 </template>
 <script>
-import { FadeTransition } from 'vue2-transitions'
 
 export default {
   name: 'BaseAlert',
-  components: {
-    FadeTransition
-  },
   props: {
     type: {
       type: String,
@@ -75,3 +72,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .v-enter-active,
+  .v-leave-active {
+    transition: opacity 0.2s ease-in-out;
+  }
+  .v-enter-from,
+  .v-leave-to {
+    opacity: 0;
+  }
+</style>

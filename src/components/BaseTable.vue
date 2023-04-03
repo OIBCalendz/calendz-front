@@ -1,29 +1,35 @@
 <template>
   <table
     :class="tableClass"
-    class="table tablesorter">
+    class="table tablesorter"
+  >
     <thead :class="theadClasses">
       <tr>
         <slot
           :columns="columns"
-          name="columns">
+          name="columns"
+        >
           <th
             v-for="column in columns"
-            :key="column">{{ column }}</th>
+            :key="column"
+          >
+            {{ column }}
+          </th>
         </slot>
       </tr>
     </thead>
     <tbody :class="tbodyClasses">
       <tr
         v-for="(item, index) in data"
-        :key="index">
+        :key="index"
+      >
         <slot
           :row="item"
-          :index="index">
+          :index="index"
+        >
           <td
-            v-for="(column, index) in columns"
-            v-if="hasValue(item, column)"
-            :key="index"
+            v-for="(column, index2) in filteredColumns(columns, item)"
+            :key="index2"
           >
             {{ itemValue(item, column) }}
           </td>
@@ -65,12 +71,15 @@ export default {
   computed: {
     tableClass () {
       return this.type && `table-${this.type}`
+    },
+    filteredColumns (columns, item) {
+      return this.columns.filter(column => item[column.toLowerCase()] !== 'undefined')
     }
   },
   methods: {
-    hasValue (item, column) {
-      return item[column.toLowerCase()] !== 'undefined'
-    },
+    // hasValue (item, column) {
+    //   return item[column.toLowerCase()] !== 'undefined'
+    // },
     itemValue (item, column) {
       return item[column.toLowerCase()]
     }

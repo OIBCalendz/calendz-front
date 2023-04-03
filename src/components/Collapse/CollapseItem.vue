@@ -3,7 +3,8 @@
     <div
       :aria-expanded="active"
       role="tab"
-      class="card-header">
+      class="card-header"
+    >
       <a
         :href="`#${itemId}`"
         :aria-controls="`content-${itemId}`"
@@ -12,10 +13,10 @@
         @click.prevent="activate"
       >
         <slot name="title"> {{ title }} </slot>
-        <i class="tim-icons icon-minimal-down"/>
+        <i class="tim-icons icon-minimal-down" />
       </a>
     </div>
-    <collapse-transition :duration="animationDuration">
+    <Transition>
       <div
         v-show="active"
         :id="`content-${itemId}`"
@@ -23,30 +24,17 @@
         role="tabpanel"
         class="collapsed"
       >
-        <div class="card-body"><slot/></div>
+        <div class="card-body">
+          <slot />
+        </div>
       </div>
-    </collapse-transition>
+    </Transition>
   </div>
 </template>
 <script>
-import { CollapseTransition } from 'vue2-transitions'
 
 export default {
   name: 'CollapseItem',
-  components: {
-    CollapseTransition
-  },
-  props: {
-    title: {
-      type: String,
-      default: '',
-      description: 'Collapse item title'
-    },
-    id: {
-      type: String,
-      default: ''
-    }
-  },
   inject: {
     animationDuration: {
       default: 250
@@ -62,6 +50,17 @@ export default {
     },
     deactivateAll: {
       default: () => {}
+    }
+  },
+  props: {
+    title: {
+      type: String,
+      default: '',
+      description: 'Collapse item title'
+    },
+    id: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -85,7 +84,7 @@ export default {
   },
   methods: {
     activate () {
-      let wasActive = this.active
+      const wasActive = this.active
       if (!this.multipleActive) {
         this.deactivateAll()
       }
@@ -94,4 +93,6 @@ export default {
   }
 }
 </script>
-<style></style>
+<style>
+/*@TODO transition: collapse :duration="animationDuration"*/
+</style>
